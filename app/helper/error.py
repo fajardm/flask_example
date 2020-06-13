@@ -1,4 +1,5 @@
 from http import HTTPStatus
+from werkzeug.exceptions import HTTPException
 from app.helper.response import response_error, response_fail
 
 
@@ -28,5 +29,12 @@ def error_handler(app):
     @app.errorhandler(HTTPStatus.UNAUTHORIZED)
     @app.errorhandler(HTTPStatus.CONFLICT)
     @app.errorhandler(HTTPStatus.INTERNAL_SERVER_ERROR)
-    def _error_handler(e):
+    def handler_known_error(e):
+        return response_error(e)
+
+    @app.errorhandler(Exception)
+    def handle_500(e):
+        app.logger.error(e)
+        e = HTTPException(description='Internal server error')
+        e.code = HTTPStatus.INTERNAL_SERVER_ERROR
         return response_error(e)
