@@ -4,7 +4,7 @@
 3. Testing using Insomnia
 
 ## Create Container
-1. Copy `./.env.example` to `./.env` then edit the content based on your preferred configuration
+1. Copy `.env.example` to `.env` then edit the content based on your preferred configuration
 2. Run `docker-compose.yaml`
 3. Open `http://localhost`
 ```
