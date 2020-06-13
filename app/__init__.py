@@ -21,16 +21,11 @@ def create_app():
     migrate.init_app(app, db)
     jwt_manager.init_app(app)
 
-    error_handler(app)
-
     @app.route('/')
     def ping():
         return "Flask Example is working!"
 
     from app.domain.user.resource import blueprint
-    app.register_blueprint(blueprint, url_prefix='/api')
-
-    from app.domain.auth.resource import blueprint
     app.register_blueprint(blueprint, url_prefix='/api')
 
     from app.domain.profile.resource import blueprint
@@ -41,5 +36,7 @@ def create_app():
 
     from app.helper.jwt import jwt_handler
     jwt_handler(jwt_manager)
+
+    error_handler(app)
 
     return app

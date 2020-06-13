@@ -26,7 +26,7 @@ def error_handler(app):
 
     @app.errorhandler(HTTPStatus.NOT_FOUND)
     @app.errorhandler(HTTPStatus.UNAUTHORIZED)
-    @app.errorhandler(HTTPStatus.INTERNAL_SERVER_ERROR)
     @app.errorhandler(HTTPStatus.CONFLICT)
+    @app.errorhandler(HTTPStatus.INTERNAL_SERVER_ERROR)
     def _error_handler(e):
         return response_error(e)

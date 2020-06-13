@@ -77,7 +77,7 @@ class Action(object):
         return json.loads(response.data)['data']
 
     def login(self, username="test", password="secret"):
-        response = self._client.post('/api/auth/login',
+        response = self._client.post('/api/users/login',
                                      data=json.dumps(dict(
                                          username=username,
                                          password=password
@@ -86,7 +86,7 @@ class Action(object):
         return json.loads(response.data)['data']
 
     def logout(self):
-        response = self._client.delete('/api/auth/logout',
+        response = self._client.delete('/api/users/logout',
                                        headers={'Authorization': 'Bearer ' + self.auth['access_token']})
         return json.loads(response.data)['data']
 
