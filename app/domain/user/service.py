@@ -1,6 +1,7 @@
 from http import HTTPStatus
 from flask import abort
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity
+from sqlalchemy import or_
 from app.domain.user.model import User
 from app.config import Config
 
@@ -24,6 +25,12 @@ def get_list():
 
 
 def create(data):
+    user = User.query.filter(or_(User.username == data['username'], User.email == data['email'])).first()
+    if user:
+        if user.username == data['username']:
+            return abort(HTTPStatus.CONFLICT, "Username already exists")
+        if user.email == data['email']:
+            return abort(HTTPStatus.CONFLICT, "Email already exists")
     user = User(username=data['username'], email=data['email'], password=data['password'])
     user.save()
     return user

@@ -96,10 +96,10 @@ def test_create(client):
             ('new_test', '', '', HTTPStatus.BAD_REQUEST),
             ('new_test@gmail.com', 'new_test', '', HTTPStatus.BAD_REQUEST),
             ('invalid_email', 'new_test', 'new_test', HTTPStatus.BAD_REQUEST),
-            # ('test@gmail.com', 'test', 'secret', HTTPStatus.INTERNAL_SERVER_ERROR),
+            ('test@gmail.com', 'test', 'secret', HTTPStatus.CONFLICT),
     ),
 )
-def test_create_validate_input(client, email, username, password, status_code):
+def test_create_validate_input(client, action, email, username, password, status_code):
     response = client.post("/api/users",
                            data=json.dumps(dict(
                                email=email,
@@ -173,7 +173,7 @@ def test_update_validate_id(client, action):
             ('test_updated@gmail.com', 'test_updated', '', HTTPStatus.BAD_REQUEST),
             ('invalid_email', 'test_updated', 'test_updated', HTTPStatus.BAD_REQUEST),
             ('test_updated@gmail.com', '', 'test_updated', HTTPStatus.OK),
-            # ('test@gmail.com', 'test', 'secret', HTTPStatus.INTERNAL_SERVER_ERROR),
+            ('test1@gmail.com', '1test', 'secret', HTTPStatus.INTERNAL_SERVER_ERROR),
     ),
 )
 def test_update_validate_input(client, action, email, username, password, status_code):
